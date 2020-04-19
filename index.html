@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Drum sounds with AudioBufferSource nodes</title>
+        
+        <style>
+            div#padArea {
+                float: top;
+                height: 50%;
+                background-color: rgb(250,200,0);
+            }
+        
+            p#description {
+                background-color: rgb(200,200,200);
+                font-family: sans-serif;
+            }
+        
+            button.drumPad {
+                height: 30%;
+                margin: 3px;
+                background-color: rgb(180,180,180);
+                font-size: 6em;
+            }
+        </style>
+        
+        <script src="AudioBufferManager.js"></script>
+        
+    </head>
+    <body>
+        <h1>Drum sounds with AudioBufferSource nodes</h1>
+        
+        <p id="description">
+        This is an <strong>incomplete starting point</strong> for playing audio with low latency using AudioBufferSource objects. You will need to edit the code to make it efficient and work properly. <i>Note: It doesn't make any noise until you tell it to!</i>
+        </p>
+        
+        <div id="padArea" width="100%">
+            <h2>Trigger pads</h2>
+        </div>
+        
+        <script>
+            var pads = []; // empty array
+            
+            // we need an audio context to use the web audio API
+            var audioContext =
+            new (window.AudioContext || window.webkitAudioContext)();
+            
+            // audioBufferManager makes it convenient to load audio files
+            var audioBufferManager = new AudioBufferManager(audioContext);
+            
+            audioBufferManager.createBufferFor("sound1.mp3");
+            audioBufferManager.createBufferFor("sound2.mp3");
+            audioBufferManager.createBufferFor("sound3.mp3");
+            audioBufferManager.createBufferFor("sound4.mp3");
+            
+        
+            function setupPad(padNumber)
+            {
+                pads[padNumber] = document.createElement("button");
+                padArea.appendChild(pads[padNumber]);
+                pads[padNumber].innerHTML = padNumber;
+                pads[padNumber].className = "drumPad";
+                pads[padNumber].addEventListener("mousedown", padActions);
+            }
+        
+        function playFromBufferNumber(bufferNumber) {
+            var audioSource = audioContext.createBufferSource(bufferNumber);
+            audioSource.buffer = audioBufferManager.buffers[bufferNumber];
+            audioSource.connect(audioContext.destination);
+            audioSource.start(bufferNumber);
+        }
+        
+            setupPad(1);
+            setupPad(2);
+            setupPad(3);
+            setupPad(4);
+        
+        
+            /*
+             padActions() callback function will trigger playback
+             depending on which trigger pad was activated
+             */
+            function padActions(event){
+                var padThatWasClicked = event.target;
+                var padIndexInArray = pads.indexOf(padThatWasClicked);
+                
+                
+                if (padIndexInArray == 1)
+                {
+                    playFromBufferNumber(0);
+                }
+                else if (padIndexInArray == 2)
+                {
+                    playFromBufferNumber(1);
+                }
+                else if (padIndexInArray == 3)
+                {
+                    playFromBufferNumber(2);
+                }
+                else if (padIndexInArray == 4)
+                {
+                    playFromBufferNumber(3);
+                }
+                
+                console.log("pad " + padIndexInArray + " was triggered");
+            }
+        
+      
+
+            </script>
+        
+    </body>
+</html>

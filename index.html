@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>1Drum sounds with AudioBufferSource nodes</title>
+        <title>2Drum sounds with AudioBufferSource nodes</title>
         
         <style>
             div#padArea {
@@ -48,11 +48,12 @@
             // audioBufferManager makes it convenient to load audio files
             var audioBufferManager = new AudioBufferManager(audioContext);
             
+              audioContext.resume();
             audioBufferManager.createBufferFor("sound1.mp3");
             audioBufferManager.createBufferFor("sound2.mp3");
             audioBufferManager.createBufferFor("sound3.mp3");
             audioBufferManager.createBufferFor("sound4.mp3");
-            
+              audioContext.resume();
         
             function setupPad(padNumber)
             {

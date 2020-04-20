@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>Drum sounds with AudioBufferSource nodes</title>
+        <title>1Drum sounds with AudioBufferSource nodes</title>
         
         <style>
             div#padArea {
@@ -24,6 +24,7 @@
         </style>
         
         <script src="AudioBufferManager.js"></script>
+         <script src="NexusUI.js"></script>
         
     </head>
     <body>
@@ -104,7 +105,10 @@
                 
                 console.log("pad " + padIndexInArray + " was triggered");
             }
-        
+            
+        var interval = new Nexus.Interval(100, function() {
+  console.log('beep');
+})
       
 
             </script>

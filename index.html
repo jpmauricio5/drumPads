@@ -55,6 +55,7 @@
         
             function setupPad(padNumber)
             {
+                audioContext.resume();
                 pads[padNumber] = document.createElement("button");
                 padArea.appendChild(pads[padNumber]);
                 pads[padNumber].innerHTML = padNumber;
